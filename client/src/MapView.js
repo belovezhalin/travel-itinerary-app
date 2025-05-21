@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMapEvents } from 'react-leaflet';
+import React, {useState} from 'react';
+import {MapContainer, Marker, Polyline, Popup, TileLayer, useMapEvents} from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
-import { exportToPDF } from './exportToPDF';
+import {exportToPDF} from './exportToPDF';
 
 const ORS_API_KEY = '5b3ce3597851110001cf624861d25d39d0a6457d99564006dd4be1ad';
 
@@ -34,25 +34,18 @@ const MapView = () => {
         const label = prompt("Place name:");
         if (!label) return;
 
-        const day = prompt("Day of the trip (ex. 1):");
-        const time = prompt("Time of the visit (ex. 10:00): ");
-        const priority = parseInt(prompt("Priority: "), 10);
-
         const newPoint = {
             ...latlng,
-            label,
-            day: parseInt(day, 10) || 1,
-            time: time || "12:00",
-            priority: isNaN(priority) ? markers.length + 1 : priority,
+            label
         };
 
         const newMarkers = [...markers, newPoint];
-        newMarkers.sort((a, b) => a.priority - b.priority);
-        newMarkers.sort((a, b) => a.priority - b.priority);
+        const sorted = sortMarkersbyDistance(newMarkers);
+        setMarkers(sorted);
 
-        setMarkers(newMarkers);
         if (newMarkers.length >= 2) {
-            fetchRouteFromORS(newMarkers);
+            setRoutes([]);
+            generateRoutes(sorted);
         }
     };
 
@@ -72,6 +65,35 @@ const MapView = () => {
 
         return R * c;
     };
+
+    const sortMarkersbyDistance = (points) => {
+        if (points.length <= 2) return points;
+
+        const visited = [points[0]];
+        const unvisited = points.slice(1);
+
+        while (unvisited.length) {
+            const last = visited[visited.length - 1];
+            let nearestIdx = 0;
+            let nearestDistance = calculateDistance(last, unvisited[0]);
+
+            for (let i = 1; i < unvisited.length; i++) {
+                const distance = calculateDistance(last, unvisited[i]);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestIdx = i;
+                }
+            }
+            visited.push(unvisited.splice(nearestIdx, 1)[0]);
+        }
+        return visited;
+    };
+
+    const generateRoutes = async (sortedPoints) => {
+        for (let i = 1; i < sortedPoints.length; i++) {
+            await fetchRouteFromORS([sortedPoints[i - 1],sortedPoints[i]]);
+        }
+    }
 
     const fetchRouteFromORS = async (points) => {
         if (points.length < 2) return;
@@ -117,10 +139,33 @@ const MapView = () => {
         }
     };
 
+    const setLastRouteAsTransit = () => {
+        setRoutes(prevRoutes => {
+            if (prevRoutes.length === 0) return prevRoutes;
+
+            return prevRoutes.map((segment, idx) => {
+                return {
+                    ...segment,
+                    mode: idx === prevRoutes.length - 1 ? 'transit' : segment.mode
+                };
+            });
+        });
+    };
+
+    const getColorByMode = (mode) => {
+        switch (mode) {
+            case 'foot-walking': return 'green';
+            case 'transit': return 'purple';
+            case 'driving-car':
+            default: return 'blue';
+        }
+    };
+
     return (
         <>
             <div style={{ margin: '10px 0' }}>
                 <button onClick={() => exportToPDF(markers)}>Export to PDF</button>
+                <button onClick={setLastRouteAsTransit}> Set last segment as Public Transport</button>
             </div>
 
             <MapContainer center={[52.2297, 21.0122]} zoom={6} style={{ height: '600px', width: '100%' }}>
@@ -134,19 +179,16 @@ const MapView = () => {
                         position={[marker.lat, marker.lng]}
                         icon={icon}>
                         <Popup>
-                            <strong>{marker.label}</strong><br />
-                            Day: {marker.day}<br />
-                            Time: {marker.time}<br />
-                            Priority: {marker.priority}
+                            <strong>{marker.label}</strong>
                         </Popup>
                     </Marker>
                 ))}
 
                 {routes.map((segment, idx) => (
                     <Polyline
-                        key={idx}
+                        key={`${idx}-${segment.mode}`}
                         positions={segment.coords}
-                        color={segment.mode === 'foot-walking' ? 'green' : 'blue'}
+                        color={getColorByMode(segment.mode)}
                     />
                 ))}
             </MapContainer>
