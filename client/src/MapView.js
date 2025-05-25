@@ -116,6 +116,7 @@ const MapView = () => {
                 addMarker={addMarker}
                 editMarker={editMarker}
                 deleteMarker={deleteMarker}
+                updateCurrentDay={updateCurrentDay}
                 getColorByMode={getColorByMode}
             />
         </div>

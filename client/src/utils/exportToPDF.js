@@ -21,11 +21,12 @@ export const exportToPDF = (days) => {
         const tableData = markers.map((marker, i) => [
             i + 1,
             marker.label,
+            marker.notes || ''
         ]);
 
         autoTable(doc, {
             startY: spacing + 5,
-            head: [['#', 'Place']],
+            head: [['#', 'Place', 'Notes']],
             body: tableData,
             margin: { left: 14, right: 14 },
             theme: 'grid',
