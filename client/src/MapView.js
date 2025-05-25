@@ -92,6 +92,41 @@ const MapView = () => {
         );
     };
 
+    const saveItinerary = async (title, daysData, isPublic) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/itineraries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title,
+                    days: daysData,
+                    isPublic
+                }),
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                alert('The itinerary has been saved!');
+            } else {
+                alert('Failed to save the itinerary.');
+            }
+        } catch (error) {
+            console.error('Error while saving itinerary:', error);
+            alert('An error occurred while saving the itinerary.');
+        }
+    };
+
+    const saveCurrentItinerary = () => {
+        const title = prompt('Enter the itinerary name:');
+        if (!title) return;
+
+        const isPublic = window.confirm('Do you want to make this itinerary public?');
+
+        saveItinerary(title, days, isPublic);
+    };
+
     const getColorByMode = (mode) => {
         switch (mode) {
             case 'foot-walking': return 'green';
@@ -110,6 +145,7 @@ const MapView = () => {
                 addNewDay={addNewDay}
                 deleteCurrentDay={deleteCurrentDay}
                 onDragEnd={onDragEnd}
+                saveCurrentItinerary={saveCurrentItinerary}
             />
             <MapPanel
                 current={current}

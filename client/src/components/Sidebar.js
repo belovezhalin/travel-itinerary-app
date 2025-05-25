@@ -5,7 +5,7 @@ import MarkerList from './MarkerList';
 
 import '../styles/Sidebar.css';
 
-export default function Sidebar({ days, currentDayId, setCurrentDayId, addNewDay, deleteCurrentDay, onDragEnd }) {
+export default function Sidebar({ days, currentDayId, setCurrentDayId, addNewDay, deleteCurrentDay, onDragEnd, saveCurrentItinerary }) {
     const current = days.find(d => d.id === currentDayId);
 
     return (
@@ -14,6 +14,7 @@ export default function Sidebar({ days, currentDayId, setCurrentDayId, addNewDay
             <MarkerList markers={current.markers} onDragEnd={onDragEnd}/>
             <div className="sidebar-controls">
                 <button onClick={() => exportToPDF(days)}>Export to PDF</button>
+                <button onClick={saveCurrentItinerary}>Save Itinerary</button>
                 <button onClick={addNewDay}>Add Day</button>
                 <button onClick={deleteCurrentDay}>Delete Current Day</button>
                 <select value={currentDayId} onChange={e => setCurrentDayId(parseInt(e.target.value))}>
