@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@dnd-kit/accessibility": "^3.1.1",
     "@hello-pangea/dnd": "^18.0.1",

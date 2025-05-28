@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { calculateDistance } from './calculateDistance';
 
-const ORS_API_KEY = '5b3ce3597851110001cf624861d25d39d0a6457d99564006dd4be1ad';
+const ORS_API_KEY = process.env.REACT_APP_ORS_API_KEY;
 
 export const fetchRoute = async (from, to) => {
     const coordinates = [[from.lng, from.lat], [to.lng, to.lat]];
