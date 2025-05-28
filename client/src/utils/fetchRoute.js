@@ -15,7 +15,8 @@ export const fetchRoute = async (from, to) => {
                 headers: {
                     'Authorization': ORS_API_KEY,
                     'Content-Type': 'application/json'
-                }
+                },
+                withCredentials: false
             }
         );
 

@@ -4,12 +4,17 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const itineraryRoutes = require('./routes/itineraries');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))

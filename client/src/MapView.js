@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { sortMarkersByDistance } from './utils/sortMarkersByDistance';
 import { fetchRoute } from './utils/fetchRoute';
 
@@ -7,9 +7,22 @@ import MapPanel from './components/MapPanel';
 
 import './App.css';
 
-const MapView = () => {
+const MapView = ({ user, itinerary, saveItinerary: saveToProp }) => {
     const [days, setDays] = useState([{ id: 1, markers: [], routes: [] }]);
     const [currentDayId, setCurrentDayId] = useState(1);
+
+    useEffect(() => {
+        if (itinerary && itinerary.days) {
+            const formattedDays = itinerary.days.map(day => ({
+                id: day.id,
+                markers: day.markers || [],
+                routes: day.routes || []
+            }));
+
+            setDays(formattedDays);
+            setCurrentDayId(formattedDays[0]?.id || 1);
+        }
+    }, [itinerary]);
 
     const getCurrentDay = () => days.find(d => d.id === currentDayId);
     const current = getCurrentDay();
@@ -92,9 +105,15 @@ const MapView = () => {
         );
     };
 
-    const saveItinerary = async (title, daysData, isPublic) => {
+    const handleSaveItinerary = async (title, daysData, isPublic) => {
         try {
-            const response = await fetch('http://localhost:5000/api/itineraries', {
+            console.log('Zapisywana struktura:', {
+                title,
+                days: daysData,
+                isPublic
+            });
+            const response = await fetch('/api/itineraries', {
+                credentials: 'include',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -103,8 +122,7 @@ const MapView = () => {
                     title,
                     days: daysData,
                     isPublic
-                }),
-                credentials: 'include'
+                })
             });
 
             if (response.ok) {
@@ -124,7 +142,11 @@ const MapView = () => {
 
         const isPublic = window.confirm('Do you want to make this itinerary public?');
 
-        saveItinerary(title, days, isPublic);
+        if (saveToProp) {
+            saveToProp(title, days, isPublic);
+        } else {
+            handleSaveItinerary(title, days, isPublic);
+        }
     };
 
     const getColorByMode = (mode) => {

@@ -16,10 +16,8 @@ export default function Auth({ setUser }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-
         try {
-            const { data } = await axios.post(endpoint, formData);
-            localStorage.setItem('token', data.token);
+            const { data } = await axios.post(endpoint, formData, { withCredentials: true });
             setUser(data.user);
         } catch (error) {
             alert(error.response?.data?.message || 'Error logging in or registering');

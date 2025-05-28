@@ -17,3 +17,35 @@
     text-align: center;
     line-height: 30px;
 }
+
+.search-container {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    z-index: 1000;
+    width: 300px;
+}
+
+.search-input {
+    width: 80%;
+    padding: 8px;
+    margin-right: 5px;
+}
+
+.search-results {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.search-result-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.search-result-item:hover {
+    background-color: #f5f5f5;
+}

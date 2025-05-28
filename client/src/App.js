@@ -3,7 +3,10 @@ import axios from 'axios';
 import MapView from './MapView';
 import Auth from './components/Auth';
 import ItineraryList from './components/ItineraryList';
+
 import './App.css';
+
+axios.defaults.withCredentials = true;
 
 function App() {
     const [user, setUser] = useState(null);
@@ -13,16 +16,11 @@ function App() {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const { data } = await axios.get('/api/auth/me', {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    setUser(data);
-                } catch (error) {
-                    localStorage.removeItem('token');
-                }
+            try {
+                const { data } = await axios.get('/api/auth/me');
+                setUser(data);
+            } catch (error) {
+                console.log('Auth error:', error);
             }
             setLoading(false);
         };
@@ -30,10 +28,14 @@ function App() {
         checkAuth();
     }, []);
 
-    const logout = () => {
-        localStorage.removeItem('token');
-        setUser(null);
-        setView('auth');
+    const logout = async () => {
+        try {
+            await axios.post('/api/auth/logout');
+            setUser(null);
+            setView('auth');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     };
 
     const createNewItinerary = () => {
@@ -74,17 +76,14 @@ function App() {
                     itinerary={selectedItinerary}
                     saveItinerary={async (title, days, isPublic) => {
                         try {
-                            const token = localStorage.getItem('token');
-                            const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
                             if (selectedItinerary) {
                                 await axios.put(`/api/itineraries/${selectedItinerary._id}`, {
                                     title, days, isPublic
-                                }, { headers });
+                                });
                             } else {
                                 await axios.post('/api/itineraries', {
                                     title, days, isPublic
-                                }, { headers });
+                                });
                             }
 
                             setView('list');

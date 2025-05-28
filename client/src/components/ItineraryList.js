@@ -8,9 +8,9 @@ export default function ItineraryList({ user, setSelectedItinerary }) {
     useEffect(() => {
         const fetchItineraries = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const headers = token ? { Authorization: `Bearer ${token}` } : {};
-                const { data } = await axios.get('/api/itineraries', { headers });
+                const { data } = await axios.get('/api/itineraries', {
+                    withCredentials: true
+                });
                 setItineraries(data);
             } catch (error) {
                 console.error('Error fetching itineraries:', error);

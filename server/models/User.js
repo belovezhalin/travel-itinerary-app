@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    refreshToken: {
+        type: String,
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -36,10 +40,12 @@ userSchema.pre('save', async function(next) {
 
 userSchema.methods.comparePassword = async function(candidatePassword) {
     try {
-        return bcrypt.compare(candidatePassword, this.password);
+        return await bcrypt.compare(candidatePassword, this.password);
     } catch (error) {
-        throw new Error('Password comparison failed');
+        throw error;
     }
 }
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = mongoose.model('User', userSchema);
