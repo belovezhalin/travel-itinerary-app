@@ -1,51 +1,210 @@
+/* Podstawowe style i resetowanie */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2196F3;
+    --primary-dark: #0d47a1;
+    --primary-light: #64b5f6;
+    --accent-color: #ff5722;
+    --text-dark: #333;
+    --text-light: #f5f5f5;
+    --background-light: #ffffff;
+    --background-dark: #f0f0f0;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--background-dark);
+}
+
+/* Stylizacja mapy */
+.map-container {
+    position: relative;
+    width: 67%;
+    min-width: 400px;
+    height: calc(100vh - 64px);
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Znaczniki na mapie */
 .custom-number-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border: 2px solid #1976d2;
+    background-color: var(--background-light);
+    width: 36px !important;
+    height: 36px !important;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+.custom-number-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
 }
 
 .marker-number {
     font-size: 16px;
     font-weight: bold;
-    color: #1976d2;
+    color: var(--primary-color);
     text-align: center;
-    line-height: 30px;
+    line-height: 32px;
 }
 
+/* Ulepszony pasek wyszukiwania */
 .search-container {
     position: absolute;
-    top: 10px;
-    left: 50px;
+    top: 20px;
+    left: 20px;
     z-index: 1000;
-    width: 300px;
+    width: 340px;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 12px;
+    transition: var(--transition);
+}
+
+.search-container form {
+    display: flex;
+    align-items: center;
 }
 
 .search-input {
     width: 80%;
-    padding: 8px;
-    margin-right: 5px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-size: 14px;
+    transition: var(--transition);
 }
 
-.search-results {
-    background: white;
-    border: 1px solid #ccc;
+.search-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.search-container button {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
     border-radius: 4px;
-    max-height: 200px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-container button:hover {
+    background-color: var(--primary-dark);
+}
+
+.search-container button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Wyniki wyszukiwania */
+.search-results {
+    background: var(--background-light);
+    border-radius: 4px;
+    max-height: 300px;
     overflow-y: auto;
-    margin-top: 5px;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .search-result-item {
-    padding: 8px 12px;
+    padding: 12px 16px;
     cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: var(--transition);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
 }
 
 .search-result-item:hover {
-    background-color: #f5f5f5;
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+/* Popupy na mapie */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.leaflet-popup-content {
+    margin: 10px 12px;
+}
+
+.leaflet-popup-content button {
+    background-color: var(--background-light);
+    border: 1px solid #ddd;
+    margin: 4px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.leaflet-popup-content button:hover {
+    background-color: var(--primary-light);
+    color: var(--text-light);
+}
+
+/* Panel boczny (jeśli istnieje) */
+.side-panel {
+    width: 33%;
+    padding: 20px;
+    background-color: var(--background-light);
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    margin-left: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .map-container {
+        width: 100%;
+        height: 60vh;
+    }
+
+    .side-panel {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+}
+
+/* Animacje dla płynnych przejść */
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Stylizacja tras na mapie */
+.leaflet-polyline {
+    stroke-width: 5;
+    opacity: 0.8;
+    animation: drawLine 2s ease;
+}
+
+@keyframes drawLine {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
 }

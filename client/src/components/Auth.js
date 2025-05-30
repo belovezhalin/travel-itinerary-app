@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function Auth({ setUser }) {
+import '../styles/Auth.css';
+
+export default function Auth({ setUser, setView }) {
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         username: '',
@@ -19,10 +21,15 @@ export default function Auth({ setUser }) {
         try {
             const { data } = await axios.post(endpoint, formData, { withCredentials: true });
             setUser(data.user);
+            setView('map');
         } catch (error) {
             alert(error.response?.data?.message || 'Error logging in or registering');
         }
     };
+
+    const handleContinueWithoutLogin = () => {
+        setView('map');
+    }
 
     return (
         <div className="auth-container">
@@ -65,7 +72,7 @@ export default function Auth({ setUser }) {
             <button onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
             </button>
-            <button onClick={() => setUser(null)}>
+            <button onClick={handleContinueWithoutLogin}>
                 Continue without logging in
             </button>
         </div>

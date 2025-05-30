@@ -1,0 +1,98 @@
+.auth-container {
+    max-width: 400px;
+    margin: 0;
+    background-color: var(--background-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    animation: fadeIn 0.5s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.auth-container h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.auth-container form div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.auth-container label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.auth-container input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.auth-container input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.auth-container button[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 10px;
+}
+
+.auth-container button[type="submit"]:hover {
+    background-color: var(--primary-dark);
+}
+
+.auth-container button:not([type="submit"]) {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 12px;
+    transition: var(--transition);
+    padding: 8px;
+    text-decoration: underline;
+}
+
+.auth-container button:not([type="submit"]):hover {
+    color: var(--primary-dark);
+}
+
+.auth-container button:last-child {
+    margin-top: 24px;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 40px 20px;
+        padding: 20px;
+    }
+}

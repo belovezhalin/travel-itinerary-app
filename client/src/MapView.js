@@ -7,7 +7,7 @@ import MapPanel from './components/MapPanel';
 
 import './App.css';
 
-const MapView = ({ user, itinerary, saveItinerary: saveToProp }) => {
+const MapView = ({ user, itinerary, saveItinerary: saveToProp, isViewMode = itinerary !== null }) => {
     const [days, setDays] = useState([{ id: 1, markers: [], routes: [] }]);
     const [currentDayId, setCurrentDayId] = useState(1);
 
@@ -176,6 +176,7 @@ const MapView = ({ user, itinerary, saveItinerary: saveToProp }) => {
                 deleteMarker={deleteMarker}
                 updateCurrentDay={updateCurrentDay}
                 getColorByMode={getColorByMode}
+                isViewMode={isViewMode}
             />
         </div>
     );

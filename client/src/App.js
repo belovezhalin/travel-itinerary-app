@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 function App() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [view, setView] = useState('list');
+    const [view, setView] = useState('map');
     const [selectedItinerary, setSelectedItinerary] = useState(null);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ function App() {
             </header>
 
             <main>
-                {view === 'auth' && <Auth setUser={setUser} />}
+                {view === 'auth' && <Auth setUser={setUser} setView={setView} />}
                 {view === 'list' && <ItineraryList user={user} setSelectedItinerary={(itinerary) => {
                     setSelectedItinerary(itinerary);
                     setView('map');
@@ -74,6 +74,7 @@ function App() {
                 {view === 'map' && <MapView
                     user={user}
                     itinerary={selectedItinerary}
+                    isViewMode={selectedItinerary !== null}
                     saveItinerary={async (title, days, isPublic) => {
                         try {
                             if (selectedItinerary) {

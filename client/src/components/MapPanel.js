@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {MapContainer, Marker, Popup, TileLayer, Polyline, useMap} from 'react-leaflet';
+import {MapContainer, Marker, Popup, TileLayer, Polyline, useMap, ZoomControl} from 'react-leaflet';
 import { MapClickHandler } from './MapClickHandler';
 import L from 'leaflet';
 import SearchBar from './SearchBar';
@@ -30,7 +30,7 @@ function FitMarkersBounds({ markers }) {
     return null;
 }
 
-export default function MapPanel({ current, addMarker, editMarker, deleteMarker, updateCurrentDay, getColorByMode }) {
+export default function MapPanel({ current, addMarker, editMarker, deleteMarker, updateCurrentDay, getColorByMode, isViewMode }) {
     const [mapInstance, setMapInstance] = useState(null);
     const mapRef = useRef(null);
 
@@ -58,15 +58,22 @@ export default function MapPanel({ current, addMarker, editMarker, deleteMarker,
     }
 
     return (
-        <div style={{ width: '67%', minWidth: 400 }}>
+        <div className="map-container">
             <SearchBar mapRef={{ current: mapInstance}} />
             <MapContainer
                 center={[52.2297, 21.0122]}
-                zoom={6} style={{ height: '100%', width: '100%' }}
+                zoom={6}
+                zoomControl={isViewMode}
+                style={{ height: '100%', width: '100%' }}
                 ref={handleMapReference}
             >
                 <MapController setMapInstance={setMapInstance} />
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                {isViewMode && <ZoomControl position="topright" />}
+
                 <MapClickHandler onAddMarker={addMarker} />
 
                 {current.markers && current.markers.length > 0 &&
