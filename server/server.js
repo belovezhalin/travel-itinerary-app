@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const itineraryRoutes = require('./routes/itineraries');
+const authRoutes = require('./routers/auth');
+const itineraryRoutes = require('./routers/itineraries');
 const cookieParser = require('cookie-parser');
 
 dotenv.config();

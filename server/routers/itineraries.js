@@ -14,7 +14,6 @@ router.get('/', auth, async (req, res) => {
         const itineraries = await Itinerary.find(query).sort({ updatedAt: -1 });
         res.json(itineraries);
     } catch {
-        console.error('Error fetching itineraries:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -31,7 +30,6 @@ router.get('/:id', auth, async (req, res) => {
         }
         res.json(itinerary);
     } catch (error) {
-        console.error('Error fetching itinerary:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -50,7 +48,6 @@ router.post('/', auth, async (req, res) => {
         await itinerary.save();
         res.status(201).json(itinerary);
     } catch (error) {
-        console.error('Error creating itinerary:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -76,7 +73,6 @@ router.put('/:id', auth, async (req, res) => {
         await itinerary.save();
         res.json(itinerary);
     } catch (error) {
-        console.error('Error updating itinerary:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
@@ -95,7 +91,6 @@ router.delete('/:id', auth, async (req, res) => {
         await itinerary.deleteOne();
         res.json({ message: 'Itinerary deleted successfully' });
     } catch (error) {
-        console.error('Error deleting itinerary:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
