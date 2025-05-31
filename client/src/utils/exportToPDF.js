@@ -90,7 +90,6 @@ export const exportToPDF = (days, itinerary) => {
         yPosition = doc.lastAutoTable.finalY + 15;
     });
 
-    // Page numbering
     const pageCount = doc.internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
@@ -99,5 +98,5 @@ export const exportToPDF = (days, itinerary) => {
         doc.text(`Page ${i} of ${pageCount}`, 105, 287, { align: 'center' });
     }
 
-    doc.save('travel-plan.pdf');
+    doc.save(`travel-plan-${itinerary.title}.pdf`);
 };
