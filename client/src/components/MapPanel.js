@@ -85,9 +85,9 @@ export default function MapPanel({ current, addMarker, editMarker, deleteMarker,
                         <Popup>
                             <div>
                                 <strong>{`${idx + 1}. ${marker.label}`}</strong><br />
-                                <button onClick={(e) => { e.stopPropagation(); editMarker(idx); }}>✏️ Edit</button>
-                                <button onClick={(e) => { e.stopPropagation(); editNotes(idx); }}>📝 Make notes</button>
-                                <button onClick={(e) => { e.stopPropagation(); deleteMarker(idx); }}>🗑️ Delete</button>
+                                <button className="marker-btn edit-btn" onClick={(e) => { e.stopPropagation(); editMarker(idx); }}>✏️ Edit</button>
+                                <button className="marker-btn notes-btn" onClick={(e) => { e.stopPropagation(); editNotes(idx); }}>📝 Make notes</button>
+                                <button className="marker-btn delete-btn" onClick={(e) => { e.stopPropagation(); deleteMarker(idx); }}>🗑️ Delete</button>
                             </div>
                         </Popup>
                     </Marker>
