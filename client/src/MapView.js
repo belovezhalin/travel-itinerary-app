@@ -161,6 +161,7 @@ const MapView = ({ itinerary, saveItinerary: saveToProp, isViewMode = itinerary 
     return (
         <div style={{ display: 'flex', height: 650 }}>
             <SideBar
+                itinerary={itinerary}
                 days={days}
                 currentDayId={currentDayId}
                 setCurrentDayId={setCurrentDayId}
