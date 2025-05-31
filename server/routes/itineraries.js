@@ -92,7 +92,7 @@ router.delete('/:id', auth, async (req, res) => {
             return res.status(403).json({ message: 'No access' });
         }
 
-        await itinerary.remove();
+        await itinerary.deleteOne();
         res.json({ message: 'Itinerary deleted successfully' });
     } catch (error) {
         console.error('Error deleting itinerary:', error);
