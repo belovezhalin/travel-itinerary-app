@@ -13,15 +13,19 @@ export default function SideBar({ days, currentDayId, setCurrentDayId, addNewDay
             <h3>Places (route order)</h3>
             <MarkerList markers={current.markers} onDragEnd={onDragEnd}/>
             <div className="sidebar-controls">
-                <button onClick={() => exportToPDF(days)}>Export to PDF</button>
-                <button onClick={saveCurrentItinerary}>Save Itinerary</button>
-                <button onClick={addNewDay}>Add Day</button>
-                <button onClick={deleteCurrentDay}>Delete Current Day</button>
-                <select value={currentDayId} onChange={e => setCurrentDayId(parseInt(e.target.value))}>
-                    {days.map((day, index) => (
-                        <option key={day.id} value={day.id}>Day {index + 1}</option>
-                    ))}
-                </select>
+                <div className="row-1">
+                    <select value={currentDayId} onChange={e => setCurrentDayId(parseInt(e.target.value))}>
+                        {days.map((day, index) => (
+                            <option key={day.id} value={day.id}>Day {index + 1}</option>
+                        ))}
+                    </select>
+                    <button className="add-btn" onClick={addNewDay}>Add Day</button>
+                    <button className="delete-btn" onClick={deleteCurrentDay}>Delete Current Day</button>
+                </div>
+                <div className="row-2">
+                    <button className="save-btn" onClick={saveCurrentItinerary}>Save Itinerary</button>
+                    <button className="export-btn" onClick={() => exportToPDF(days)}>Export to PDF</button>
+                </div>
             </div>
         </div>
     );
