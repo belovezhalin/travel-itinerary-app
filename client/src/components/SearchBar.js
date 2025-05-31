@@ -21,13 +21,13 @@ export default function SearchBar({ mapRef }) {
                     format: 'json',
                     limit: 5
                 },
-                withCredentials: false // Kluczowe: wyłączamy wysyłanie ciasteczek dla zewnętrznego API
+                withCredentials: false
             });
 
             setResults(response.data);
             setShowResults(true);
         } catch (error) {
-            console.error('Błąd wyszukiwania:', error);
+            console.error('Error searching:', error);
         } finally {
             setLoading(false);
         }
@@ -37,7 +37,7 @@ export default function SearchBar({ mapRef }) {
         if (mapRef.current) {
             const map = mapRef.current;
             const lat = parseFloat(result.lat);
-            const lng = parseFloat(result.lon);
+            const lng = parseFloat(result.lng);
 
             map.flyTo([lat, lng], 14);
         }
@@ -51,11 +51,11 @@ export default function SearchBar({ mapRef }) {
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Szukaj miejsc..."
+                    placeholder="Search places..."
                     className="search-input"
                 />
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Szukam...' : 'Szukaj'}
+                    {loading ? 'Searching...' : 'Search'}
                 </button>
             </form>
 
@@ -72,7 +72,7 @@ export default function SearchBar({ mapRef }) {
                             </div>
                         ))
                     ) : (
-                        <div className="search-result-item">Nie znaleziono wyników</div>
+                        <div className="search-result-item">No results found</div>
                     )}
                 </div>
             )}
