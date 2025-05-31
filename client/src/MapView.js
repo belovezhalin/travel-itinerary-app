@@ -107,7 +107,7 @@ const MapView = ({ itinerary, saveItinerary: saveToProp, isViewMode = itinerary 
 
     const handleSaveItinerary = async (title, daysData, isPublic) => {
         try {
-            console.log('Zapisywana struktura:', {
+            console.log('Saving structure:', {
                 title,
                 days: daysData,
                 isPublic
@@ -152,7 +152,6 @@ const MapView = ({ itinerary, saveItinerary: saveToProp, isViewMode = itinerary 
     const getColorByMode = (mode) => {
         switch (mode) {
             case 'foot-walking': return 'green';
-            case 'transit': return 'purple';
             case 'driving-car': return 'blue';
             default: return 'gray';
         }
