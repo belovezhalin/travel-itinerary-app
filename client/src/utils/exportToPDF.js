@@ -98,5 +98,5 @@ export const exportToPDF = (days, itinerary) => {
         doc.text(`Page ${i} of ${pageCount}`, 105, 287, { align: 'center' });
     }
 
-    doc.save(`travel-plan-${itinerary.title}.pdf`);
+    doc.save(`travel plan-${itinerary.title}.pdf`);
 };
