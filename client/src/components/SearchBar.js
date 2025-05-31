@@ -37,7 +37,7 @@ export default function SearchBar({ mapRef }) {
         if (mapRef.current) {
             const map = mapRef.current;
             const lat = parseFloat(result.lat);
-            const lng = parseFloat(result.lng);
+            const lng = parseFloat(result.lon);
 
             map.flyTo([lat, lng], 14);
         }
