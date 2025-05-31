@@ -82,3 +82,28 @@ header h1 {
   font-size: 14px;
   opacity: 0.9;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #2196F3;
+  --primary-dark: #0d47a1;
+  --primary-light: #64b5f6;
+  --accent-color: #ff5722;
+  --text-dark: #333;
+  --text-light: #f5f5f5;
+  --background-light: #ffffff;
+  --background-dark: #f0f0f0;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body, html {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-dark);
+  background-color: var(--background-dark);
+}

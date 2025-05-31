@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import '../styles/SearchBar.css';
+
 export default function SearchBar({ mapRef }) {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
