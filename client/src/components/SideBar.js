@@ -5,7 +5,7 @@ import MarkerList from './MarkerList';
 
 import '../styles/Sidebar.css';
 
-export default function Sidebar({ days, currentDayId, setCurrentDayId, addNewDay, deleteCurrentDay, onDragEnd, saveCurrentItinerary }) {
+export default function SideBar({ days, currentDayId, setCurrentDayId, addNewDay, deleteCurrentDay, onDragEnd, saveCurrentItinerary }) {
     const current = days.find(d => d.id === currentDayId);
 
     return (
