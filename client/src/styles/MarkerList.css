@@ -1,8 +1,36 @@
+.markers-container {
+    margin-top: 10px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding: 5px;
+}
+
 .marker-list-item {
     user-select: none;
-    padding: 12px;
-    margin: 0 0 8px 0;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px 15px;
+    margin: 0 0 10px 0;
+    background: var(--background-light);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
+
+.marker-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #f8f8f8;
+}
+
+.marker-list-item:active {
+    cursor: grabbing;
+}
+
+.marker-list-item.is-dragging {
+    background-color: #e3f2fd;
+    border-left-color: var(--primary-light);
+    opacity: 0.8;
 }

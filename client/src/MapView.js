@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { sortMarkersByDistance } from './utils/sortMarkersByDistance';
 import { fetchRoute } from './utils/fetchRoute';
 
-import Sidebar from './components/Sidebar';
+import SideBar from './components/SideBar';
 import MapPanel from './components/MapPanel';
 
 import './App.css';
@@ -160,7 +160,7 @@ const MapView = ({ user, itinerary, saveItinerary: saveToProp, isViewMode = itin
 
     return (
         <div style={{ display: 'flex', height: 650 }}>
-            <Sidebar
+            <SideBar
                 days={days}
                 currentDayId={currentDayId}
                 setCurrentDayId={setCurrentDayId}

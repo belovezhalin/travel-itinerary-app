@@ -3,7 +3,7 @@ import { exportToPDF } from '../utils/exportToPDF';
 
 import MarkerList from './MarkerList';
 
-import '../styles/Sidebar.css';
+import '../styles/SideBar.css';
 
 export default function SideBar({ days, currentDayId, setCurrentDayId, addNewDay, deleteCurrentDay, onDragEnd, saveCurrentItinerary }) {
     const current = days.find(d => d.id === currentDayId);
