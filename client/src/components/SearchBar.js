@@ -39,7 +39,7 @@ export default function SearchBar({ mapRef }) {
             const lat = parseFloat(result.lat);
             const lng = parseFloat(result.lon);
 
-            map.flyTo([lat, lng], 14);
+            map.flyTo([lat, lng], 18);
         }
         setShowResults(false);
     };
